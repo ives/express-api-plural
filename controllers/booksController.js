@@ -26,8 +26,16 @@ function booksController(Book) {
         // return to avoid two returns
         return res.send(err);
       }
+
+      // Hypermedia
+      const returnBooks = books.map((book) => {
+        const newBook = book.toJSON();
+        newBook.links = {};
+        newBook.links.self = `http://${req.headers.host}/api/books/${book._id}`;
+        return newBook;
+      })
       // else send JSON
-      return res.json(books);
+      return res.json(returnBooks);
     });
   }
   return { post, get };

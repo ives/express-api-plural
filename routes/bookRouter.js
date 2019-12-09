@@ -27,7 +27,12 @@ function routes(Book) {
   });
 
   bookRouter.route('/books/:bookId')
-    .get((req, res) => res.json(req.book))
+    .get((req, res) => {
+      const returnBook = req.book.toJSON();
+      returnBook.links = {};
+      returnBook.links.FilterByThisGebre = `http://${req.headers.host}/api/books/?genre=${req.book.genre}`;
+      res.json(returnBook);
+    })
     /*
       Book.findById(req.params.bookId, (err, book) => {
         if (err) {
