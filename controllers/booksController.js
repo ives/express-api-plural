@@ -3,7 +3,7 @@ function booksController(Book) {
     // req.body containing JSON added as payload
     // is available thanks to body-parser
     const book = new Book(req.body); // create new Mongoose book obj
-    if(!req.body.title) {
+    if (!req.body.title) {
       res.status(400);
       return res.send('Title is required');
     }
